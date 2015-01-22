@@ -23,7 +23,7 @@ $(document).ready(function(){
   	var total_hedomn=(parseInt(($('#v_edomn').val()),10))*hora_extra_dominical_n;
 
   	var total=total_hd+total_hnoc+total_hediur+total_henoc+total_hdom+total_hdomn+total_hedom+total_hedomn
-  	console.log(total);
+  	
   	if(sal<1288600){
   		total=total+75000;
   	}
@@ -43,16 +43,17 @@ $(document).ready(function(){
     var fi=Date.parse(date2_ms);
     //dependiendo de la fecha del contrato
     if(tipo_contrato=="termino fijo"){
-    	var diastf=(Date.parse(datetf) - Date.parse(date2_ms))/(1000*60*60*24)
+    	var diastf=(Date.parse(datetf) - Date.parse(date1_ms))/(1000*60*60*24)
     	
     	liquidacion=diastf*sal;
     	
-    }else{
+    }
+    else{
     	var diff = (Date.parse(date1_ms) - Date.parse(date2_ms))/(1000*60*60*24); 
    	    var dif_anos=Math.round((parseInt(diff, 10))/365);
         var dias_trabajados=diff-(dif_anos*5);
 	    var dias_liquidacion=dias_trabajados-360;
-	    console.log(dias_liquidacion);
+	    
     	//ley 789
     	if(fi>siete){
 
@@ -81,7 +82,9 @@ $(document).ready(function(){
     var y2 = new Date(date2_ms);
     var year2=y2.getFullYear();
     var month=y2.getMonth()+1;
-    var day=y2.getDay()-1;
+    console.log(month);
+    var day=y2.getDay();
+    console.log(day);
     var jul="07/01/";
     var julioAux = jul.concat(year);
     var difPrima;
@@ -107,16 +110,16 @@ $(document).ready(function(){
     //intereses a las cesantias
     var por_interes_cesantias=(((difCesantias*12)/360)/100);
     var interes_cesantias=cesantias*por_interes_cesantias;
-    console.log(interes_cesantias);
+    
 
     //vacaciones
     var ano_nuevo=year-1;
     var dif_year = String(month).concat("/",String(day),"/",String(ano_nuevo));
     var dy = new Date(dif_year);
-    
+    console.log(dif_year);
     difVacaciones= (Date.parse(date1_ms) - Date.parse(dy))/(1000*60*60*24);
+    console.log(difVacaciones);
     var vacaciones=((difVacaciones*15)/360)*dia_prima;
-
     console.log(String(vacaciones));
     $("#mostrar_salario").text(sal);
     $("#h").text(hora);
